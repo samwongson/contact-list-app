@@ -1,11 +1,16 @@
-Joe,joe@joe.com
-Bob,bob@bob.com
-Cam,cam@cam.com
-John,john@john.com
-Bill,bill@bill.com
-dave,dave@dave.com
-Dill,dill@dill.com
-hobo,hobo@hobo.com
-pat,pat@pat.com
-greg,greg@greg.com
-hank,hank@hank.com
+Joe,joe@joe.com,"mobile:7782222222, home:5555555555"
+Bob,bob@bob.com,
+Cam,cam@cam.com,
+John,john@john.com,
+Bill,bill@bill.com,
+dave,dave@dave.com,
+Dill,dill@dill.com,
+hobo,hobo@hobo.com,
+pat,pat@pat.com,
+greg,greg@greg.com,
+hank,hank@hank.com,
+Samson,Bobo@hotmail.com,
+billy-Bob,asdasd@hotmail.com,
+brandon,brandon@huang.com,
+,jc,"{:home=>""555-565656"", :mobile=>""666666""}"
+Kevin,kevin@gmail.com,"{:home=>""666 666666"", :mobile=>""555 555555\e[A""}"
