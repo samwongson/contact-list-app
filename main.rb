@@ -1,71 +1,39 @@
 require_relative 'contact'
-require 'pry'
+
 # require_relative 'contact_database'
 
 # class ExistingContactError < StandardError
 # end
 
-# def help
-#  puts "Here is a list of available commands: 
-#     new  - Create a new contact 
-#     list - List all contacts
-#     show - Show a contact
-#     find - Find a contact"
-# end
+def help
+  puts "Here is a list of available commands: 
+    new  - Create or update a contact
+    list - List all contacts
+    delete - delete a contact
+    find - Find a contact"
 
-# user_answer = ARGV.first
-# second_arg =ARGV[1]
+  puts "what would you like to do?"
+  answer = gets.chomp.downcase
 
-#   case user_answer 
-#   when 'help' 
-#     help
-#   when 'new'
-
-#     puts "What is the contact's email?"
-#     email = STDIN.gets.chomp
-
-#     ContactDatabase.read_contacts.each do |contact|
-#       if contact.email == email
-#         raise ExistingContactError, 'That contact already exists.'
-#       end
-#     end
-
-#     puts "What is the contact's name?"
-#     name = STDIN.gets.chomp
-
-#     puts "How many phone numbers?"
-#     phone_hash = {}
-#     num_of_ph = STDIN.gets.chomp.to_i
-#       if num_of_ph == "0"
-#         return
-#       else
-#         num_of_ph.times do 
-#         puts "What kind of phone number is this?"
-#         ph_type = STDIN.gets.chomp.to_sym
-#         puts "What's the phone number?"
-#         num = STDIN.gets.chomp   
-#         phone_hash[ph_type] = num
-#         end
-#       end
+  case
+    when answer == "new"
+      create_update 
+    when answer == "list"
+      list
+    when answer == "delete"
+      destroy
+    when answer == "find"
+      find
+    else
+      puts "Sorry I don't understand that, please enter a new command."
+      help
+  end 
+end
 
 
-
-#     Contact.create(name, email, phone_hash)
-#     puts "#{name} has been added!"
-
-#   when 'list'
-#     Contact.all
-#   when 'show'
-#     Contact.show(second_arg.to_i)
-#   when "find"
-#     Contact.find(second_arg)
-#   else
-#     return
-#   end
 def list
-  contacts = Contact.all
-  contacts.each do |contact|
-  puts "#{contact.id} Name: #{contact.firstname} #{contact.lastname} Email: #{contact.email}"
+  Contact.all.each do |contact|
+    p contact
   end
 end
 
@@ -82,13 +50,13 @@ def create_update
     puts "Enter email: "
     email = gets.chomp
 
-    contact = Contact.new(firstname, lastname, email)
-    contact.save!
+    Contact.create(firstname: firstname, lastname: lastname, email: email)
+    
   else
     puts "Enter ID you want to update"
     id = gets.chomp.to_i
 
-    contact = Contact.find_id(id)[0]
+    contact = Contact.find(id)
     puts contact
     puts "New name?"
     fn = gets.chomp
@@ -97,12 +65,7 @@ def create_update
     puts "New email?"
     em = gets.chomp
 
-    contact.firstname = fn
-    contact.lastname = ln
-    contact.email = em
-
-    contact.save!
-
+    contact.update(firstname: fn, lastname: ln, email: em)
   end
 
 
@@ -114,13 +77,20 @@ def find
   input = gets.chomp.downcase
   case 
     when input == "id"
-      Contact.find_id(input)
+      puts "ID?"
+      response = gets.chomp
+      p Contact.find(response.to_i)
     when input == "firstname"
-      Contact.find_all_by_firstname(input)
+      puts "What's the first name?"
+      response = gets.chomp
+      p Contact.where("firstname = ?", response)
     when input == "lastname"
-      Contact.find_all_by_lastname(input)
+      puts "What's the last name?"
+      response = gets.chomp
+      p Contact.where("lastname = ?", response)
     when input == "email"
-      Contact.find_by_email(input)
+      response = gets.chomp
+      p Contact.where("email = ?", response)
     else
       "DONT KNOW"
   end
@@ -130,21 +100,29 @@ def destroy
   puts "What ID would you like to destroy? :)"
   id = gets.chomp.to_i
 
-  contact = Contact.find_id(id)
+  contact = Contact.find(id)
   contact.destroy
 end
 
+help
 
 
 
 # list
+
 # create_update
-a = Contact.find_id(4)
-puts a
-# Contact.find_id(4)
-contacts = Contact.find_all_by_firstname("Ass")
-# binding.pry
-puts contacts
+
+# list
+
+# destroy
+
+# list
+# # a = Contact.find_id(4)
+# puts a
+# # Contact.find_id(4)
+# contacts = Contact.find_all_by_firstname("Ass")
+# # binding.pry
+# puts contacts
 # contact = Contact.find_by_email("samson@hotmail.com")
 # puts contact
 
